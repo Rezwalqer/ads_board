@@ -32,4 +32,5 @@ public interface UserMapper {
         return ADS_IMAGES + value.getId();
     }
 
+
 }
