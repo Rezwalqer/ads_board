@@ -61,8 +61,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findUserFromContext() {
-        return userRepository.findById(getUserDetailsFromContext().getId())
-                .orElseThrow(() -> new NotFoundException("User from id " + getUserDetailsFromContext().getId() + " not found"));
+        return getUserDetailsFromContext().getUser();
     }
 
 }

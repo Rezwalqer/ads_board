@@ -13,7 +13,8 @@ import ru.skypro.avito.dto.RegisterReq;
 import ru.skypro.avito.mapper.UserMapper;
 import ru.skypro.avito.service.AuthService;
 
-@CrossOrigin(value = "http://localhost:3000")
+import javax.validation.Valid;
+
 @RequiredArgsConstructor
 @RestController
 @Tag(name = "Регистрация")
@@ -23,7 +24,7 @@ public class RegisterController {
 
     @Operation(summary = "Регистрация пользователя")
     @PostMapping("/register")
-    public ResponseEntity<HttpStatus> register(@RequestBody RegisterReq req) {
+    public ResponseEntity<HttpStatus> register(@Valid @RequestBody RegisterReq req) {
         authService.register(UserMapper.INSTANCE.toEntity(req));
         return ResponseEntity.ok().build();
     }

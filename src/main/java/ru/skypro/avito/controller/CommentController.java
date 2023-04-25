@@ -10,7 +10,8 @@ import ru.skypro.avito.service.CommentService;
 import ru.skypro.avito.dto.CommentDto;
 import ru.skypro.avito.dto.ResponseWrapper;
 
-@CrossOrigin(value = "http://localhost:3000")
+import javax.validation.Valid;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/ads")
@@ -27,7 +28,7 @@ public class CommentController {
     @Operation(summary = "Добавить комментарий к объявлению")
     @PostMapping("/{adKey}/comments")
     public ResponseEntity<CommentDto> addComments(@PathVariable("adKey") Integer adKey,
-                                                     @RequestBody CommentDto commentDto) {
+                                                  @Valid @RequestBody CommentDto commentDto) {
         return ResponseEntity.ok(commentService.addComment(adKey, commentDto));
     }
 
@@ -41,8 +42,8 @@ public class CommentController {
     @Operation(summary = "Обновить комментарий")
     @PatchMapping("/{adKey}/comment/{id}")
     public ResponseEntity<CommentDto> updateComment(@PathVariable("adKey") Integer adKey,
-                                                       @PathVariable("id") Integer id,
-                                                       @RequestBody CommentDto updatedCommentDto) {
+                                                    @PathVariable("id") Integer id,
+                                                    @Valid @RequestBody CommentDto updatedCommentDto) {
         return ResponseEntity.ok(commentService.updateComment(adKey, id, updatedCommentDto));
     }
 }

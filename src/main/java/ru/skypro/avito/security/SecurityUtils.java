@@ -14,13 +14,13 @@ public class SecurityUtils {
     }
 
     public static Integer getUserIdFromContext() {
-        return getUserDetailsFromContext().getId();
+        return getUserDetailsFromContext().getUser().getId();
     }
 
     public static void checkPermissionToAds(Ads ads) {
         MyUserDetails userDetails = getUserDetailsFromContext();
 
-        if (userDetails.getId() != ads.getAuthor().getId()) {
+        if (!userDetails.getUser().getId().equals(ads.getAuthor().getId())) {
             throw new AccessDeniedException("Чтобы изменить/удалить объявление, нужно иметь роль ADMIN или быть владельцем этого объявления");
         }
     }
@@ -28,7 +28,7 @@ public class SecurityUtils {
     public static void checkPermissionToAdsComment(Comment comment) {
         MyUserDetails userDetails = getUserDetailsFromContext();
 
-        if (userDetails.getId() != comment.getAuthor().getId()) {
+        if (!userDetails.getUser().getId().equals(comment.getAuthor().getId())) {
             throw new AccessDeniedException("Чтобы изменить/удалить комментарий, нужно иметь роль ADMIN или быть владельцем этого комментария");
         }
     }
