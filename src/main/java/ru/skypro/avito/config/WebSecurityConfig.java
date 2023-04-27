@@ -1,7 +1,9 @@
 package ru.skypro.avito.config;
 
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -41,6 +43,7 @@ public class WebSecurityConfig {
                 .httpBasic(withDefaults())
                 .build();
     }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {

@@ -8,11 +8,11 @@ import java.util.List;
 @Getter
 public class MyUserDetails extends org.springframework.security.core.userdetails.User {
 
-    private final int id;
+    private final User user;
 
     public MyUserDetails(User user) {
         super(user.getEmail(), user.getPassword(), List.of(user.getRole()));
-        this.id = user.getId();
+        this.user = user;
     }
 
     @Override

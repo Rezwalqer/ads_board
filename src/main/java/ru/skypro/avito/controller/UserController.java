@@ -15,7 +15,8 @@ import ru.skypro.avito.dto.UserDto;
 import ru.skypro.avito.service.ImageService;
 import ru.skypro.avito.service.UserService;
 
-@CrossOrigin(value = "http://localhost:3000")
+import javax.validation.Valid;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/users")
@@ -27,7 +28,7 @@ public class UserController {
 
     @Operation(summary = "Обновление пароля")
     @PostMapping("/set_password")
-    public ResponseEntity<NewPassword> setPassword(@RequestBody NewPassword newPassword) {
+    public ResponseEntity<NewPassword> setPassword(@Valid @RequestBody NewPassword newPassword) {
         userService.updatePassword(newPassword.getNewPassword(), newPassword.getCurrentPassword());
 
         return ResponseEntity.ok(newPassword);
@@ -41,7 +42,7 @@ public class UserController {
 
     @Operation(summary = "Обновить информацию об авторизованном пользователе")
     @PatchMapping("/me")
-    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto) {
+    public ResponseEntity<UserDto> updateUser(@Valid @RequestBody UserDto userDto) {
         return ResponseEntity.ok(userService.updateUser(userDto));
     }
 
@@ -49,7 +50,7 @@ public class UserController {
     @Operation(summary = "Обновить аватар авторизованного пользователя")
     @PatchMapping(value = "/me/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> updateAvatar(@Parameter(description = "Новая картинка")
-                                             @RequestPart(value = "image")  MultipartFile image) {
+                                              @Valid @RequestPart(value = "image")  MultipartFile image) {
         userService.updateAvatar(image);
         return ResponseEntity.ok().build();
     }

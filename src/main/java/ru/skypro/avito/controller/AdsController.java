@@ -17,8 +17,9 @@ import ru.skypro.avito.dto.ResponseWrapper;
 import ru.skypro.avito.service.AdsService;
 import ru.skypro.avito.service.ImageService;
 
+import javax.validation.Valid;
 
-@CrossOrigin(value = "http://localhost:3000")
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/ads")
@@ -38,8 +39,8 @@ public class AdsController {
     @Operation(summary = "Добавить объявление")
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<AdsDto> addAds(@Parameter(description = "Данные нового объявления")
-                                         @RequestPart("image") MultipartFile image,
-                                         @RequestPart("properties") CreateAds dto) {
+                                         @Valid @RequestPart("image") MultipartFile image,
+                                         @Valid @RequestPart("properties") CreateAds dto) {
         return ResponseEntity.ok(adsService.createAds(image, dto));
     }
 
@@ -67,7 +68,7 @@ public class AdsController {
     @PatchMapping(value = "/{id}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<AdsDto> updateAdsImage(@PathVariable("id") Integer id,
                                                  @Parameter(description = "Новая картинка")
-                                                 @RequestPart(value = "image") MultipartFile image) {
+                                                 @Valid @RequestPart(value = "image") MultipartFile image) {
         return ResponseEntity.ok(adsService.updateAdsImage(adsService.findAdsById(id), imageService.uploadImage(image)));
     }
 
@@ -75,7 +76,7 @@ public class AdsController {
     @Operation(summary = "Обновить информацию об объявлении")
     @PatchMapping("/{id}")
     public ResponseEntity<AdsDto> updateAds(@PathVariable("id") Integer id,
-                                            @RequestBody CreateAds updatedAdsDto) {
+                                            @Valid @RequestBody CreateAds updatedAdsDto) {
         return ResponseEntity.ok(adsService.updateAds(updatedAdsDto, id));
     }
 

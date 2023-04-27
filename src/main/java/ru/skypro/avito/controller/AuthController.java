@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.skypro.avito.dto.LoginReq;
 import ru.skypro.avito.service.AuthService;
 
-@CrossOrigin(value = "http://localhost:3000")
+import javax.validation.Valid;
+
 @RequiredArgsConstructor
 @RestController
 @Tag(name = "Авторизация")
@@ -21,7 +22,7 @@ public class AuthController {
 
     @Operation(summary = "Авторизация пользователя")
     @PostMapping("/login")
-    public ResponseEntity<Void> login(@RequestBody LoginReq req) {
+    public ResponseEntity<Void> login(@Valid @RequestBody LoginReq req) {
         authService.login(req.getUsername(), req.getPassword());
         return ResponseEntity.ok().build();
     }
